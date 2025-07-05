@@ -3,6 +3,7 @@ jest.setTimeout(20000); // Give enough time for Mongo to connect
 const app = require("../app");
 const request = require("supertest");
 const waitForMongo = require("../utils/waitForMongo");
+const mongoose = require("mongoose");
 
 beforeAll(async () => {
   await waitForMongo();
@@ -16,4 +17,8 @@ test("POST /shorten returns a shortUrl", async () => {
 
   expect(res.status).toBe(200);
   expect(res.body.shortUrl).toBeDefined();
+});
+
+afterAll(async () => {
+  await mongoose.connection.close(); // ✅ Properly closes Mongo connection
 });
