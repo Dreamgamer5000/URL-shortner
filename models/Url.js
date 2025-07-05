@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
 
 const urlSchema = new mongoose.Schema({
-  shortId: String,
-  originalUrl: String,
-  hitCount: { type: Number, default: 0 },
+  originalUrl: { type: String, required: true },
+  shortUrl: { type: String, required: true },
 });
 
 module.exports = mongoose.model("Url", urlSchema);
