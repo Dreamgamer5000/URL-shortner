@@ -1,6 +1,15 @@
 const Url = require("../models/Url");
 const { nanoid } = require("nanoid");
 
+const StatsD = require("node-statsd");
+const client = new StatsD({
+  host: "localhost",
+  port: 8125,
+});
+
+// Inside your function that handles a URL redirect:
+client.increment("url_hits");
+
 exports.shorten = async (req, res) => {
   try {
     const { url } = req.body;
